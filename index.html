@@ -16,6 +16,13 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
+        /* EFECTO DE DESTELLO CUÁNTICO */
+        #flash-effect {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent); opacity: 0; z-index: 20000;
+            pointer-events: none; transition: opacity 0.1s ease-out;
+        }
+
         /* MANIFIESTO PAPIRO ORIGINAL - PRESERVADO */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         .paper { background-color: #e4d5b7; background-image: url("https://www.transparenttextures.com"); color: #8b0000; padding: 40px 25px 25px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', Times, serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
@@ -56,6 +63,8 @@
     </style>
 </head>
 <body>
+
+    <div id="flash-effect"></div>
 
     <div id="overlay">
         <div class="paper">
@@ -103,7 +112,7 @@
         <p style="font-size:0.85rem; margin-bottom:15px; line-height:1.4;">Dona un poco de nafta para que el motor siga girando en cada casa...🏡</p>
         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
             <a href="https://link.mercadopago.com.ar" target="_blank" class="pay-link" onclick="simulateDonation()">MERCADO PAGO AR</a>
-            <a href="https://paypal.me/proyectocuantico" target="_blank" class="pay-link" style="color:#0070ba; border-color:#0070ba;" onclick="simulateDonation()">PAYPAL GLOBAL</a>
+            <a href="https://paypal.me" target="_blank" class="pay-link" style="color:#0070ba; border-color:#0070ba;" onclick="simulateDonation()">PAYPAL GLOBAL</a>
         </div>
     </div>
 
@@ -183,8 +192,14 @@
         function simulateDonation() {
             donorCount++;
             document.getElementById('supply-count').innerText = donorCount.toString().padStart(6, '0');
-            aiLog("SISTEMA: Registrando sintonizador cuántico...");
-            speakIA("Gracias por sintonizar el motor.");
+            
+            // EFECTO FLASH CIAN
+            const flash = document.getElementById('flash-effect');
+            flash.style.opacity = "0.3";
+            setTimeout(() => { flash.style.opacity = "0"; }, 150);
+
+            aiLog("SISTEMA: Resonancia aumentada. Gracias, sintonizador.");
+            speakIA("Energía recibida. El motor Proyecto Cuántico se fortalece.");
         }
     </script>
 </body>
