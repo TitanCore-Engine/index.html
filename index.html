@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN CORE | IAcore</title>
+    <title>TITAN CORE | IAcore Cloud</title>
     <style>
         :root { 
             --accent: #00f2ff; --data: #00ff41; --text: #f0f0f0;
@@ -16,12 +16,8 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        /* EFECTO DE DESTELLO CUÁNTICO */
-        #flash-effect {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--accent); opacity: 0; z-index: 20000;
-            pointer-events: none; transition: opacity 0.1s ease-out;
-        }
+        /* EFECTO FLASH CIAN */
+        #flash-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent); opacity: 0; z-index: 20000; pointer-events: none; transition: opacity 0.1s; }
 
         /* MANIFIESTO PAPIRO ORIGINAL - PRESERVADO */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
@@ -31,8 +27,9 @@
         .paper p { text-align: left; font-size: 1rem; margin-bottom: 12px; font-weight: 600; }
         .highlight { border-bottom: 1px solid #8b0000; }
 
+        /* TÍTULO Y DASHBOARD */
         .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
-        #gear { font-size: 70px; margin: 10px; transition: transform 0.2s; }
+        #gear { font-size: 70px; margin: 10px; }
         .spinning { animation: gearRotate 1s linear infinite; }
         @keyframes gearRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
@@ -44,12 +41,14 @@
         #temp-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.8s ease-in-out; }
         #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 12px; color: #fff; font-weight: bold; top: 0; left: 0; text-shadow: 1px 1px 2px #000; }
 
+        /* IA CORE INTERFACE */
         .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
         .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); }
         #chat-window { color: var(--accent); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; font-weight: bold; }
         #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 15px; outline: none; font-family: monospace; box-sizing: border-box; }
         #voice-toggle { position: absolute; right: 12px; top: 12px; z-index: 100; background: transparent; border: none; color: var(--accent); font-size: 1.4rem; cursor: pointer; }
 
+        /* PAQUETES Y DONACIÓN */
         .core-installer { width: 95%; max-width: 450px; background: #0a0c10; border: 1px solid #333; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
         .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; transition: 0.3s; border: 1px solid transparent; margin-bottom: 8px; }
         .dl-android { color: var(--data); border-color: rgba(0, 255, 65, 0.3); background: rgba(0, 255, 65, 0.05); }
@@ -63,9 +62,8 @@
     </style>
 </head>
 <body>
-
     <div id="flash-effect"></div>
-
+    
     <div id="overlay">
         <div class="paper">
             <span class="close-btn" onclick="closeManifesto()">✕</span>
@@ -83,8 +81,7 @@
     
     <div class="dashboard">
         <div class="label-donors">Cantidad de donantes registrados</div>
-        <div id="supply-count">001240</div>
-        
+        <div id="supply-count">000000</div>
         <div class="temp-bar-bg">
             <div id="temp-fill"></div>
             <div id="temp-percent">POTENCIA: 0%</div>
@@ -103,9 +100,9 @@
 
     <div class="core-installer">
         <div style="font-size: 0.7rem; color: #666; margin-bottom: 15px;">PAQUETES DE INSTALACIÓN</div>
-        <a href="#" class="dl-btn dl-android"><span>ANDROID CORE</span> <span>APK</span></a>
-        <a href="#" class="dl-btn dl-windows"><span>WINDOWS SINTONY</span> <span>EXE</span></a>
-        <a href="#" class="dl-btn dl-linux"><span>LINUX ADIABATIC</span> <span>DEB</span></a>
+        <a href="#" class="dl-btn dl-android"><span>ANDROID CORE</span> <span>▼ APK</span></a>
+        <a href="#" class="dl-btn dl-windows"><span>WINDOWS SINTONY</span> <span>▼ EXE</span></a>
+        <a href="#" class="dl-btn dl-linux"><span>LINUX ADIABATIC</span> <span>▼ DEB</span></a>
     </div>
 
     <div class="donation-box">
@@ -116,39 +113,49 @@
         </div>
     </div>
 
+    <!-- FIREBASE CLOUD SYNC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBecvFGKjohZKqnO42AvrP3gVJgzSjo30I",
+            authDomain: "titancore-87eeb.firebaseapp.com",
+            databaseURL: "https://titancore-87eeb-default-rtdb.firebaseio.com",
+            projectId: "titancore-87eeb",
+            storageBucket: "titancore-87eeb.firebasestorage.app",
+            messagingSenderId: "722131400490",
+            appId: "1:722131400490:web:a3a54105875a964ca11053"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const donorRef = ref(db, 'stats/donorCount');
+
+        onValue(donorRef, (snapshot) => {
+            const val = snapshot.val() || 1240;
+            document.getElementById('supply-count').innerText = val.toString().padStart(6, '0');
+        });
+
+        window.simulateDonation = function() {
+            runTransaction(donorRef, (count) => (count || 1240) + 1);
+            const flash = document.getElementById('flash-effect');
+            flash.style.opacity = "0.3";
+            setTimeout(() => flash.style.opacity = "0", 150);
+            aiLog("SISTEMA: Energía recibida. Sincronizando nube...");
+            speakIA("Energía recibida. El motor Proyecto Cuántico se fortalece.");
+        };
+    </script>
+
     <script>
         let isAudioMuted = false;
-        let donorCount = 1240;
         const msgPotencia = "vamos a encender el motor y a probar toda la potencia de este modelo titan!!!";
 
-        function closeManifesto() { 
-            document.getElementById('overlay').style.display = 'none'; 
-            speakIA(msgPotencia);
-        }
+        function closeManifesto() { document.getElementById('overlay').style.display = 'none'; speakIA(msgPotencia); }
+        function toggleAudio() { isAudioMuted = !isAudioMuted; document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊"; if(isAudioMuted) window.speechSynthesis.cancel(); }
+        function aiLog(msg) { const win = document.getElementById('chat-window'); win.innerHTML += `<br>> ${msg}`; win.scrollTop = win.scrollHeight; }
+        function aiProcess(val) { if(!val) return; aiLog(`<span style="color:white">USR: ${val}</span>`); document.getElementById('ai-in').value = ''; setTimeout(() => { const res = "Sintonía estable. Analizando parámetros cuánticos."; aiLog(res); speakIA(res); }, 600); }
         
-        function toggleAudio() {
-            isAudioMuted = !isAudioMuted;
-            document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊";
-            if(isAudioMuted) window.speechSynthesis.cancel();
-        }
-
-        function aiLog(msg) {
-            const win = document.getElementById('chat-window');
-            win.innerHTML += `<br>> ${msg}`;
-            win.scrollTop = win.scrollHeight;
-        }
-
-        function aiProcess(val) {
-            if(!val) return;
-            aiLog(`<span style="color:white">USR: ${val}</span>`);
-            document.getElementById('ai-in').value = '';
-            setTimeout(() => {
-                const res = "Sintonización cuántica en proceso. Sistema estable.";
-                aiLog(res);
-                speakIA(res);
-            }, 600);
-        }
-
         function speakIA(text) {
             if (isAudioMuted) return;
             if ('speechSynthesis' in window) {
@@ -156,7 +163,6 @@
                 const msg = new SpeechSynthesisUtterance(text);
                 msg.lang = 'es-AR';
                 msg.rate = 1.0;
-                msg.pitch = 0.9;
                 window.speechSynthesis.speak(msg);
             }
         }
@@ -171,10 +177,7 @@
                 p++;
                 fill.style.width = p + '%';
                 percentText.innerText = `POTENCIA: ${p}%`;
-                if(p >= 100) {
-                    clearInterval(startInterval);
-                    startOscillation();
-                }
+                if(p >= 100) { clearInterval(startInterval); startOscillation(); }
             }, 25);
             speakIA(msgPotencia);
         }
@@ -183,23 +186,10 @@
             const fill = document.getElementById('temp-fill');
             const percentText = document.getElementById('temp-percent');
             setInterval(() => {
-                let oscillation = Math.floor(Math.random() * (100 - 85 + 1)) + 85;
-                fill.style.width = oscillation + '%';
-                percentText.innerText = `POTENCIA: ${oscillation}%`;
+                let osc = Math.floor(Math.random() * (100 - 85 + 1)) + 85;
+                fill.style.width = osc + '%';
+                percentText.innerText = `POTENCIA: ${osc}%`;
             }, 850);
-        }
-
-        function simulateDonation() {
-            donorCount++;
-            document.getElementById('supply-count').innerText = donorCount.toString().padStart(6, '0');
-            
-            // EFECTO FLASH CIAN
-            const flash = document.getElementById('flash-effect');
-            flash.style.opacity = "0.3";
-            setTimeout(() => { flash.style.opacity = "0"; }, 150);
-
-            aiLog("SISTEMA: Resonancia aumentada. Gracias, sintonizador.");
-            speakIA("Energía recibida. El motor Proyecto Cuántico se fortalece.");
         }
     </script>
 </body>
