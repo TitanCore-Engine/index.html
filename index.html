@@ -8,7 +8,6 @@
         :root { 
             --accent: #00f2ff; --data: #00ff41; --text: #f0f0f0;
             --panel: rgba(10, 12, 16, 0.96); --gold: #ffcc00; --danger: #ff3333;
-            --bio-neutral: #4db34d; --silver-bright: #e0e0e0; 
         }
         body { 
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
@@ -17,7 +16,7 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        /* MANIFIESTO PAPIRO ORIGINAL */
+        /* MANIFIESTO PAPIRO ORIGINAL - PRESERVADO */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         .paper { background-color: #e4d5b7; background-image: url("https://www.transparenttextures.com"); color: #8b0000; padding: 40px 25px 25px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', Times, serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; opacity: 0.8; font-family: sans-serif; }
@@ -25,36 +24,33 @@
         .paper p { text-align: left; font-size: 1rem; margin-bottom: 12px; font-weight: 600; }
         .highlight { border-bottom: 1px solid #8b0000; }
 
-        /* TÍTULO 3D BLANCO */
-        .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 10px rgba(0,0,0,0.25); }
-        #gear { font-size: 70px; margin: 10px; transition: transform 0.5s ease; }
+        .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
+        #gear { font-size: 70px; margin: 10px; transition: transform 0.2s; }
         .spinning { animation: gearRotate 1s linear infinite; }
         @keyframes gearRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .dashboard { background: var(--panel); border: 1px solid #333; padding: 20px; width: 90%; max-width: 450px; border-radius: 8px; margin-bottom: 15px; }
-        #supply-count { font-size: 3rem; text-align: center; font-weight: bold; }
-        .temp-bar-bg { width: 100%; height: 12px; background: #000; border-radius: 4px; border: 1px solid #444; margin: 15px 0; overflow: hidden; }
-        #temp-fill { width: 10%; height: 100%; background: var(--danger); transition: 1.5s ease-in-out; }
+        .dashboard { background: var(--panel); border: 1px solid #333; padding: 20px; width: 90%; max-width: 450px; border-radius: 8px; margin-bottom: 15px; text-align: center; }
+        .label-donors { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+        #supply-count { font-size: 3rem; font-weight: bold; }
+        
+        .temp-bar-bg { width: 100%; height: 12px; background: #000; border-radius: 4px; border: 1px solid #444; margin: 15px 0; overflow: hidden; position: relative; }
+        #temp-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.8s ease-in-out; }
+        #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 12px; color: #fff; font-weight: bold; top: 0; left: 0; text-shadow: 1px 1px 2px #000; }
 
-        /* INTERFAZ IA CORE */
         .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
-        .mode-btn-eco { background: rgba(0,0,0,0.6); border: 1px solid #333; color: var(--bio-neutral); padding: 10px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; font-family: 'Consolas', monospace; }
-        .mode-btn-eco.active { border-color: var(--bio-neutral); background: rgba(77, 179, 77, 0.15); }
-        .mode-btn-tech { background: rgba(0,0,0,0.6); border: 1px solid #333; color: var(--silver-bright); padding: 10px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; font-family: 'Consolas', monospace; }
-        .mode-btn-tech.active { border-color: var(--silver-bright); background: rgba(224, 224, 224, 0.1); }
+        .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); }
+        #chat-window { color: var(--accent); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; font-weight: bold; }
+        #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 15px; outline: none; font-family: monospace; box-sizing: border-box; }
+        #voice-toggle { position: absolute; right: 12px; top: 12px; z-index: 100; background: transparent; border: none; color: var(--accent); font-size: 1.4rem; cursor: pointer; }
 
-        .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 110px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); }
-        #chat-window { color: var(--accent); font-size: 0.85rem; line-height: 1.4; white-space: pre-wrap; }
-        #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 12px; outline: none; font-family: monospace; box-sizing: border-box; }
+        .core-installer { width: 95%; max-width: 450px; background: #0a0c10; border: 1px solid #333; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
+        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; transition: 0.3s; border: 1px solid transparent; margin-bottom: 8px; }
+        .dl-android { color: var(--data); border-color: rgba(0, 255, 65, 0.3); background: rgba(0, 255, 65, 0.05); }
+        .dl-windows { color: var(--gold); border-color: rgba(255, 204, 0, 0.3); background: rgba(255, 204, 0, 0.05); }
+        .dl-linux { color: var(--danger); border-color: rgba(255, 51, 51, 0.3); background: rgba(255, 51, 51, 0.05); }
 
-        /* BOTONES DE CONTROL DE IA */
-        .ai-controls { position: absolute; right: 10px; top: 48px; display: flex; gap: 12px; z-index: 100; }
-        .ctrl-btn { background: transparent; border: none; color: var(--accent); font-size: 1.2rem; cursor: pointer; opacity: 0.7; transition: 0.3s; }
-        .ctrl-btn:hover { opacity: 1; transform: scale(1.1); }
-
-        .donation-box { text-align: center; margin: 30px 0; max-width: 450px; }
-        .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 12px 20px; font-weight: bold; background: rgba(255, 204, 0, 0.05); display: inline-block; transition: 0.3s; }
-        .pay-link:hover { background: var(--gold); color: black; box-shadow: 0 0 10px var(--gold); }
+        .donation-box { text-align: center; margin: 30px 0; max-width: 450px; width: 90%; }
+        .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 12px 20px; font-weight: bold; background: rgba(255, 204, 0, 0.05); display: inline-block; transition: 0.3s; margin: 5px; min-width: 140px; }
 
         .btn-ignite { background: var(--accent); color: #000; border: none; padding: 18px 60px; font-weight: 900; cursor: pointer; margin: 10px 0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
     </style>
@@ -67,7 +63,7 @@
             <h2>TITAN CORE</h2>
             <p><span class="highlight">El Cambio de Identidad: De "Consumidor" a "Sintonizador"</span></p>
             <p>Mientras que los poderosos venden "Potencia" (choque fuerte), Titan Core ofrece "Sincronía" (orden perfecto).</p>
-            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase que impacta directamente en un resultado termodinámico sorprendente.</p>
+            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase.</p>
             <p>Consumo Inteligente: La eficiencia nace del orden, no del esfuerzo.</p>
             <p>Bienvenido al bienestar de la ecología donde la soberanía de tu hogar es el corazón que debemos cuidar...</p>
         </div>
@@ -77,88 +73,52 @@
     <div id="gear">⚙️</div>
     
     <div class="dashboard">
+        <div class="label-donors">Cantidad de donantes registrados</div>
         <div id="supply-count">001240</div>
-        <div class="temp-bar-bg"><div id="temp-fill"></div></div>
-        <div style="text-align: center; font-size: 0.7rem;">SISTEMA: <span id="mode-display" style="color:var(--accent)">CLÁSICO</span></div>
+        
+        <div class="temp-bar-bg">
+            <div id="temp-fill"></div>
+            <div id="temp-percent">POTENCIA: 0%</div>
+        </div>
     </div>
 
     <button class="btn-ignite" onclick="igniteEngine()">IGNICIÓN</button>
     
     <div class="ai-interface">
-        <button id="btn-eco" class="mode-btn-eco" onclick="setMode('eco')">[ Sintonía Ecológica ]</button>
-        
-        <div class="ai-controls">
-            <button id="audio-toggle" class="ctrl-btn" onclick="toggleAudio()" title="Silenciar Asistente">🔊</button>
-            <button id="voice-toggle" class="ctrl-btn" onclick="toggleVoice()" title="Comando de Voz">🎤</button>
+        <button id="voice-toggle" onclick="toggleAudio()">🔊</button>
+        <div class="chat-core">
+            <div id="chat-window">> IAcore ONLINE.<br>> vamos a encender el motor y a probar toda la potencia de este modelo titan!!!</div>
         </div>
-
-        <div class="chat-core"><div id="chat-window">> IAcore ONLINE.<br>> Sintonizador, establezca comunicación...</div></div>
-        <button id="btn-tech" class="mode-btn-tech" onclick="setMode('tech')">[ Protocolo Técnico ]</button>
         <input type="text" id="ai-in" placeholder="Comando..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
+    </div>
+
+    <div class="core-installer">
+        <div style="font-size: 0.7rem; color: #666; margin-bottom: 15px;">PAQUETES DE INSTALACIÓN</div>
+        <a href="#" class="dl-btn dl-android"><span>ANDROID CORE</span> <span>APK</span></a>
+        <a href="#" class="dl-btn dl-windows"><span>WINDOWS SINTONY</span> <span>EXE</span></a>
+        <a href="#" class="dl-btn dl-linux"><span>LINUX ADIABATIC</span> <span>DEB</span></a>
     </div>
 
     <div class="donation-box">
         <p style="font-size:0.85rem; margin-bottom:15px; line-height:1.4;">Dona un poco de nafta para que el motor siga girando en cada casa...🏡</p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
-            <a href="#" class="pay-link">MERCADO PAGO AR</a>
-        </div>
+        <a href="https://link.mercadopago.com.ar" class="pay-link" onclick="simulateDonation()">MERCADO PAGO AR</a>
+        <a href="https://paypal.me" class="pay-link" style="color:#0070ba; border-color:#0070ba;" onclick="simulateDonation()">PAYPAL GLOBAL</a>
     </div>
 
     <script>
         let isAudioMuted = false;
-        let count = 1240;
+        let donorCount = 1240;
+        const msgPotencia = "vamos a encender el motor y a probar toda la potencia de este modelo titan!!!";
 
-        function closeManifesto() {
-            document.getElementById('overlay').style.display = 'none';
+        // Función para cerrar el papiro y activar la voz de bienvenida
+        function closeManifesto() { 
+            document.getElementById('overlay').style.display = 'none'; 
+            speakIA(msgPotencia); // Recibe al usuario con voz al entrar
         }
-
+        
         function toggleAudio() {
-            const audioBtn = document.getElementById('audio-toggle');
             isAudioMuted = !isAudioMuted;
-            if (isAudioMuted) {
-                audioBtn.innerText = "🔇";
-                audioBtn.style.color = "var(--danger)";
-                aiLog("SISTEMA: Audio desactivado.");
-            } else {
-                audioBtn.innerText = "🔊";
-                audioBtn.style.color = "var(--accent)";
-                aiLog("SISTEMA: Audio activado.");
-                speakIA("Audio activado");
-            }
-        }
-
-        function igniteEngine() {
-            const gear = document.getElementById('gear');
-            const tempFill = document.getElementById('temp-fill');
-            const supplyDisplay = document.getElementById('supply-count');
-            
-            gear.classList.add('spinning');
-            tempFill.style.width = '85%';
-            tempFill.style.background = 'var(--accent)';
-            
-            let interval = setInterval(() => {
-                count += Math.floor(Math.random() * 3);
-                supplyDisplay.innerText = count.toString().padStart(6, '0');
-            }, 150);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                aiLog("IGNICIÓN COMPLETADA. Resonancia estable.");
-                speakIA("Ignición completada. Bienvenido, sintonizador.");
-            }, 3000);
-        }
-
-        function setMode(mode) {
-            const display = document.getElementById('mode-display');
-            if(mode === 'eco') {
-                display.innerText = "ECOLÓGICO";
-                display.style.color = "var(--bio-neutral)";
-                aiLog("MODO ECO: Optimización de recursos activa.");
-            } else {
-                display.innerText = "TÉCNICO";
-                display.style.color = "var(--silver-bright)";
-                aiLog("MODO TECH: Acceso a red de bajo nivel.");
-            }
+            document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊";
         }
 
         function aiLog(msg) {
@@ -172,23 +132,58 @@
             aiLog(`<span style="color:white">USR: ${val}</span>`);
             document.getElementById('ai-in').value = '';
             setTimeout(() => {
-                const response = "Parámetro aceptado. Ajustando fase.";
-                aiLog(response);
-                speakIA(response);
+                const res = "Analizando flujo de datos. Sistema estable.";
+                aiLog(res);
+                speakIA(res);
             }, 600);
         }
 
+        // MOTOR DE VOZ ARGENTINO
         function speakIA(text) {
             if (!isAudioMuted && 'speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'es-AR';
-                utterance.rate = 0.95;
-                window.speechSynthesis.speak(utterance);
+                window.speechSynthesis.cancel(); // Corta voces anteriores
+                const msg = new SpeechSynthesisUtterance(text);
+                msg.lang = 'es-AR'; // Acento local
+                msg.rate = 1.0; // Velocidad natural
+                msg.pitch = 0.9; // Tono ligeramente más tecnológico
+                window.speechSynthesis.speak(msg);
             }
         }
 
-        function toggleVoice() {
-            aiLog("SISTEMA: Escuchando entrada de voz...");
+        function igniteEngine() {
+            const gear = document.getElementById('gear');
+            const fill = document.getElementById('temp-fill');
+            const percentText = document.getElementById('temp-percent');
+            
+            gear.classList.add('spinning');
+            
+            let p = 0;
+            let startInterval = setInterval(() => {
+                p++;
+                fill.style.width = p + '%';
+                percentText.innerText = `POTENCIA: ${p}%`;
+                if(p >= 100) {
+                    clearInterval(startInterval);
+                    startOscillation();
+                }
+            }, 25);
+
+            speakIA(msgPotencia); // Repite el mensaje al activar ignición
+        }
+
+        function startOscillation() {
+            const fill = document.getElementById('temp-fill');
+            const percentText = document.getElementById('temp-percent');
+            setInterval(() => {
+                let oscillation = Math.floor(Math.random() * (100 - 85 + 1)) + 85;
+                fill.style.width = oscillation + '%';
+                percentText.innerText = `POTENCIA: ${oscillation}%`;
+            }, 850);
+        }
+
+        function simulateDonation() {
+            donorCount++;
+            document.getElementById('supply-count').innerText = donorCount.toString().padStart(6, '0');
         }
     </script>
 </body>
