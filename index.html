@@ -101,8 +101,10 @@
 
     <div class="donation-box">
         <p style="font-size:0.85rem; margin-bottom:15px; line-height:1.4;">Dona un poco de nafta para que el motor siga girando en cada casa...🏡</p>
-        <a href="https://link.mercadopago.com.ar" class="pay-link" onclick="simulateDonation()">MERCADO PAGO AR</a>
-        <a href="https://paypal.me" class="pay-link" style="color:#0070ba; border-color:#0070ba;" onclick="simulateDonation()">PAYPAL GLOBAL</a>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+            <a href="https://link.mercadopago.com.ar" target="_blank" class="pay-link" onclick="simulateDonation()">MERCADO PAGO AR</a>
+            <a href="https://paypal.me/proyectocuantico" target="_blank" class="pay-link" style="color:#0070ba; border-color:#0070ba;" onclick="simulateDonation()">PAYPAL GLOBAL</a>
+        </div>
     </div>
 
     <script>
@@ -117,16 +119,8 @@
         
         function toggleAudio() {
             isAudioMuted = !isAudioMuted;
-            const btn = document.getElementById('voice-toggle');
-            if (isAudioMuted) {
-                btn.innerText = "🔇";
-                btn.style.opacity = "0.5";
-                window.speechSynthesis.cancel(); // Silencio total inmediato
-            } else {
-                btn.innerText = "🔊";
-                btn.style.opacity = "1";
-                speakIA("Audio activado");
-            }
+            document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊";
+            if(isAudioMuted) window.speechSynthesis.cancel();
         }
 
         function aiLog(msg) {
@@ -140,15 +134,14 @@
             aiLog(`<span style="color:white">USR: ${val}</span>`);
             document.getElementById('ai-in').value = '';
             setTimeout(() => {
-                const res = "Frecuencia estable. Analizando parámetros de sintonía.";
+                const res = "Sintonización cuántica en proceso. Sistema estable.";
                 aiLog(res);
                 speakIA(res);
             }, 600);
         }
 
         function speakIA(text) {
-            if (isAudioMuted) return; // Si está muteado, no ejecuta nada
-            
+            if (isAudioMuted) return;
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance(text);
@@ -163,9 +156,7 @@
             const gear = document.getElementById('gear');
             const fill = document.getElementById('temp-fill');
             const percentText = document.getElementById('temp-percent');
-            
             gear.classList.add('spinning');
-            
             let p = 0;
             let startInterval = setInterval(() => {
                 p++;
@@ -176,7 +167,6 @@
                     startOscillation();
                 }
             }, 25);
-
             speakIA(msgPotencia);
         }
 
@@ -193,6 +183,8 @@
         function simulateDonation() {
             donorCount++;
             document.getElementById('supply-count').innerText = donorCount.toString().padStart(6, '0');
+            aiLog("SISTEMA: Registrando sintonizador cuántico...");
+            speakIA("Gracias por sintonizar el motor.");
         }
     </script>
 </body>
