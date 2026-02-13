@@ -63,7 +63,7 @@
             <h2>TITAN CORE</h2>
             <p><span class="highlight">El Cambio de Identidad: De "Consumidor" a "Sintonizador"</span></p>
             <p>Mientras que los poderosos venden "Potencia" (choque fuerte), Titan Core ofrece "Sincronía" (orden perfecto).</p>
-            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase.</p>
+            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase que impacta directamente en un resultado termodinámico sorprendente.</p>
             <p>Consumo Inteligente: La eficiencia nace del orden, no del esfuerzo.</p>
             <p>Bienvenido al bienestar de la ecología donde la soberanía de tu hogar es el corazón que debemos cuidar...</p>
         </div>
@@ -110,15 +110,23 @@
         let donorCount = 1240;
         const msgPotencia = "vamos a encender el motor y a probar toda la potencia de este modelo titan!!!";
 
-        // Función para cerrar el papiro y activar la voz de bienvenida
         function closeManifesto() { 
             document.getElementById('overlay').style.display = 'none'; 
-            speakIA(msgPotencia); // Recibe al usuario con voz al entrar
+            speakIA(msgPotencia);
         }
         
         function toggleAudio() {
             isAudioMuted = !isAudioMuted;
-            document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊";
+            const btn = document.getElementById('voice-toggle');
+            if (isAudioMuted) {
+                btn.innerText = "🔇";
+                btn.style.opacity = "0.5";
+                window.speechSynthesis.cancel(); // Silencio total inmediato
+            } else {
+                btn.innerText = "🔊";
+                btn.style.opacity = "1";
+                speakIA("Audio activado");
+            }
         }
 
         function aiLog(msg) {
@@ -132,20 +140,21 @@
             aiLog(`<span style="color:white">USR: ${val}</span>`);
             document.getElementById('ai-in').value = '';
             setTimeout(() => {
-                const res = "Analizando flujo de datos. Sistema estable.";
+                const res = "Frecuencia estable. Analizando parámetros de sintonía.";
                 aiLog(res);
                 speakIA(res);
             }, 600);
         }
 
-        // MOTOR DE VOZ ARGENTINO
         function speakIA(text) {
-            if (!isAudioMuted && 'speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Corta voces anteriores
+            if (isAudioMuted) return; // Si está muteado, no ejecuta nada
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance(text);
-                msg.lang = 'es-AR'; // Acento local
-                msg.rate = 1.0; // Velocidad natural
-                msg.pitch = 0.9; // Tono ligeramente más tecnológico
+                msg.lang = 'es-AR';
+                msg.rate = 1.0;
+                msg.pitch = 0.9;
                 window.speechSynthesis.speak(msg);
             }
         }
@@ -168,7 +177,7 @@
                 }
             }, 25);
 
-            speakIA(msgPotencia); // Repite el mensaje al activar ignición
+            speakIA(msgPotencia);
         }
 
         function startOscillation() {
