@@ -1,0 +1,403 @@
+
+cat << 'EOF' > index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN CORE | Central de Ingeniería Soberana</title>
+    <style>
+        :root { 
+            --accent: #00f2ff; --data: #00ff41; --text: #f0f0f0;
+            --bg: #08090b; --panel: #111318; --gold: #ffcc00;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 40px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 2s ease; }
+        
+        /* MANIFIESTO INICIAL */
+        #manifesto-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:10000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .manifesto-card { background:#fff; color:#000; padding:40px; max-width:600px; border-radius:4px; position:relative; font-family:'Times New Roman', serif; box-shadow:0 0 40px rgba(255,255,255,0.1); }
+
+        /* MOTOR CENTRAL */
+        .workshop-core { background: var(--panel); border: 1px solid #222; border-radius: 20px; padding: 30px; display: flex; gap: 30px; align-items: center; box-shadow: 0 20px 50px rgba(0,0,0,0.7); margin: 20px 0; }
+        .engine-gear { font-size: 90px; color: var(--accent); filter: drop-shadow(0 0 10px rgba(0,242,255,0.2)); transition: 0.5s; }
+
+        /* X-RAY VIEW */
+        .xray-box { background: #050608; border: 1px solid #1a1b20; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.65em; height: 120px; overflow: hidden; position: relative; color: #1b5e20; }
+        #code-stream { position: absolute; width: 90%; line-height: 1.5; opacity: 0.7; animation: scrollCode 10s linear infinite; }
+
+        /* PAQUETES 📦 */
+        .dispatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; margin-top: 30px; }
+        .pkg-card { background: #16181d; border: 1px solid #2a2d35; padding: 20px; border-radius: 12px; transition: 0.3s; }
+        .pkg-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        /* ASISTENTE Y SEMÁFORO */
+        .assistant-dock { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; align-items: flex-end; z-index: 999; }
+        .chat-box { background: #000; border: 1px solid #333; border-radius: 12px; padding: 15px; width: 260px; margin-bottom: 10px; display: none; }
+        .traffic-light { display: flex; gap: 8px; background: #1a1c22; padding: 8px 15px; border-radius: 30px; border: 1px solid #333; }
+        .light { width: 12px; height: 12px; border-radius: 50%; opacity: 0.15; transition: 0.5s; }
+        .active-g { opacity: 0.6; background: #00ff41; box-shadow: 0 0 8px #00ff41; }
+        .active-y { opacity: 1; background: #ffcc00; box-shadow: 0 0 10px #ffcc00; }
+        .active-r { opacity: 1; background: #ff4444; box-shadow: 0 0 12px #ff4444; }
+
+        /* MODAL PAGOS */
+        #pay-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#000; border:2px solid var(--gold); padding:30px; border-radius:15px; z-index:11000; text-align:center; }
+
+        .btn-main { background: var(--accent); color: #000; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
+        
+        @keyframes scrollCode { 0% { top: 40px; } 100% { top: -80px; } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- MANIFIESTO B/N -->
+    <div id="manifesto-overlay">
+        <div class="manifesto-card">
+            <div onclick="document.getElementById('manifesto-overlay').style.display='none'" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px; font-weight:bold;">&times;</div>
+            <h2 style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px;">MANIFIESTO TITAN</h2>
+            <p style="line-height:1.6; font-size:1em; text-align:justify;">
+                <b>Hola a todos y bienvenidos.</b><br><br>
+                Este es un proyecto de un desarrollador argentino sobre <b>Regulación Térmica Adiabática</b>. Es la primera solución cuántica para sistemas de silicio clásicos en tan solo un clic.<br><br>
+                ¿Por qué lo libero? Quiero que los ciudadanos vean el potencial de una programación adelantada a su época y cuiden el medio ambiente. Compará TITAN con cualquier tecnología actual: un simple orden de datos preserva tu hardware más que nada en el mundo.
+            </p>
+            <div style="text-align:center; font-weight:bold; margin-top:20px;">[ TITAN CORE: SOBERANÍA TECNOLÓGICA ]</div>
+        </div>
+    </div>
+
+    <h1>TITAN CORE</h1>
+    <p style="color: #444; letter-spacing: 3px; font-size: 0.8em;">SOLUCIÓN DE PROPULSIÓN ARGENTINA</p>
+
+    <div class="workshop-core">
+        <div id="main-gear" class="engine-gear">⚙️</div>
+        <div class="xray-box">
+            <div id="code-stream">
+                > INIT_CORE_ADIABATIC...<br>
+                > CALIBRATING_SILICON...<br>
+                > TEMP: OPTIMAL<br>
+                > DATA_FLOW: READY<br>
+                > STATUS: STANDBY<br>
+                > RE-CHECKING_VALVES...
+            </div>
+        </div>
+    </div>
+
+    <button onclick="ignite()" class="btn-main">SIMULACIÓN DE ARRANQUE</button>
+
+    <div class="dispatch-grid">
+        <!-- UNIVERSAL -->
+        <div class="pkg-card" style="border: 2px solid var(--gold); grid-column: 1 / -1;">
+            <h3 style="color:var(--gold)">📦 PAQUETE UNIVERSAL v3.0</h3>
+            <p style="font-size: 0.8em; color: #888;">Detección automática. Compatible con todos los sistemas. Genera acceso directo con icono de Semáforo.</p>
+            <button onclick="deploy('UNIVERSAL')" style="background:var(--gold); border:none; padding:10px 30px; font-weight:bold; cursor:pointer; border-radius:5px;">DESCARGA MAESTRA</button>
+        </div>
+        <!-- WINDOWS -->
+        <div class="pkg-card">
+            <div class="pkg-title">🪟 WINDOWS (TODAS LAS VERS.)</div>
+            <p style="font-size: 0.75em; color:#666;">Compatible Win 7/8/10/11. Incluye .BAT transparente y .EXE directo.</p>
+            <button onclick="deploy('WIN')" style="width:100%; background:none; border:1px solid #444; color:var(--accent); padding:8px; cursor:pointer;">CARGAR ⛽</button>
+        </div>
+        <!-- ANDROID -->
+        <div class="pkg-card">
+            <div class="pkg-title">🤖 ANDROID / TERMUX</div>
+            <p style="font-size: 0.75em; color:#666;">Optimización móvil ARM64. Control térmico y de batería integrado.</p>
+            <button onclick="deploy('ANDROID')" style="width:100%; background:none; border:1px solid #444; color:var(--accent); padding:8px; cursor:pointer;">CARGAR ⛽</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <button onclick="openPayment()" style="background:#332200; color:var(--gold); border:1px solid var(--gold); padding:10px 20px; border-radius:30px; cursor:pointer; font-weight:bold;">⛽ SUMINISTRAR COMBUSTIBLE (APOYAR)</button>
+    </div>
+
+    <!-- ASISTENTE SEMÁFORO -->
+    <div class="assistant-dock">
+        <div class="chat-box" id="chat">
+            <div id="msg" style="font-size: 0.85em; color:#fff; line-height:1.4;"></div>
+            <input type="text" id="user-in" placeholder="Duda técnica..." style="width:100%; background:#000; border:1px solid #333; color:var(--data); margin-top:10px; font-size:0.8em; outline:none; padding:5px;">
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 30px;">
+            <div class="traffic-light">
+                <div id="l-r" class="light"></div><div id="l-y" class="light"></div><div id="l-g" class="light active-g"></div>
+            </div>
+            <button id="v-btn" onclick="toggleV()" style="background:none; border:none; cursor:pointer; font-size:1.2em;">🔇</button>
+            <div onclick="toggleC()" style="font-size: 40px; cursor: pointer;">⚙️</div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGOS -->
+    <div id="pay-modal">
+        <h3 style="color:var(--gold); margin-top:0;">🏁 SUMINISTRO AL MECÁNICO</h3>
+        <p style="font-size:0.8em; color:#bbb;">Tu aporte mantiene el motor soberano y libre de corporaciones.</p>
+        <button onclick="payLocal()" style="background:#009ee3; color:#fff; border:none; width:100%; padding:12px; border-radius:5px; margin-bottom:10px; cursor:pointer; font-weight:bold;">💙 MERCADO PAGO (ARGENTINA)</button>
+        <button onclick="payGlobal()" style="background:#003087; color:#fff; border:none; width:100%; padding:12px; border-radius:5px; cursor:pointer; font-weight:bold;">🌎 PAYPAL (INTERNATIONAL)</button>
+        <br><br><button onclick="document.getElementById('pay-modal').style.display='none'" style="background:none; border:none; color:#666; cursor:pointer;">[ CERRAR ]</button>
+    </div>
+
+    <script>
+        let voice = false;
+        function toggleV() { voice = !voice; document.getElementById('v-btn').innerText = voice ? "🔊" : "🔇"; }
+        function toggleC() { const c = document.getElementById('chat'); c.style.display = c.style.display==='block'?'none':'block'; }
+
+        function speak(t) {
+            let i = 0; const m = document.getElementById('msg'); m.innerText = "";
+            const interval = setInterval(() => {
+                if(i < t.length) { m.innerHTML += t.charAt(i); i++; }
+                else { clearInterval(interval); }
+            }, 35);
+            if(voice) { const u = new SpeechSynthesisUtterance(t); u.lang = 'es-AR'; u.rate = 1; window.speechSynthesis.speak(u); }
+        }
+
+        function setLight(c) {
+            document.getElementById('l-r').className = 'light' + (c=='red'?' active-r':'');
+            document.getElementById('l-y').className = 'light' + (c=='yellow'?' active-y':'');
+            document.getElementById('l-g').className = 'light' + (c=='green'?' active-g':'');
+        }
+
+        function ignite() {
+            setLight('yellow'); speak("Iniciando emulación. Calibrando inyectores cuánticos...");
+            let p = 0; const gear = document.getElementById('main-gear');
+            const loop = setInterval(() => {
+                p += 5; gear.style.transform = `rotate(${p*10}deg)`;
+                if(p >= 100) { clearInterval(loop); setLight('green'); speak("¡Motor en marcha! Llaves en mano conductor. Sincronización óptima."); }
+            }, 50);
+        }
+
+        function deploy(os) {
+            speak("Despachando paquete " + os + ". Al terminar, buscá el icono del SEMÁFORO en tu pantalla.");
+            const blob = new Blob(["Titan Core Protocol"], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Titan_${os}_Deploy.txt`;
+            a.click();
+        }
+
+        function openPayment() {
+            setLight('green');
+            speak("¡Esa es la actitud! Tu apoyo evita que caigamos en manos de corporaciones. ¡Gracias por la nafta!");
+            document.getElementById('pay-modal').style.display = 'block';
+        }
+
+        function payLocal() {
+            const alias = "calor.abeja.apuro.mp";
+            navigator.clipboard.writeText(alias);
+            speak("Alias '" + alias + "' copiado. Abrí tu App de Mercado Pago. ¡Tanque lleno!");
+            setTimeout(() => { window.open("https://mpago.la", "_blank"); }, 1500);
+        }
+
+        function payGlobal() {
+            window.open("https://www.paypal.com", "_blank");
+        }
+
+        window.onload = () => { setTimeout(() => { toggleC(); speak("¡Bienvenido a TITAN CORE! ¿Aprendemos a manejar?"); }, 1500); };
+    </script>
+</body>
+</html>
+npm install -g surge
+
+surge .
+
+npm install -g surge
+
+npm install -g surge
+surge login
+
+npm install -g netlify-cli
+
+termux-setup-storage
+
+cat << 'EOF' > index.html
+
+<html lang="es">cat << 'EOF' > index.html
+
+cat << 'EOF' > index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN CORE | Central de Ingeniería Soberana</title>
+    <style>
+        :root { 
+            --accent: #00f2ff; --data: #00ff41; --text: #f0f0f0;
+            --bg: #08090b; --panel: #111318; --gold: #ffcc00;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 40px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 2s ease; }
+        
+        /* MANIFIESTO INICIAL */
+        #manifesto-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:10000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .manifesto-card { background:#fff; color:#000; padding:40px; max-width:600px; border-radius:4px; position:relative; font-family:'Times New Roman', serif; box-shadow:0 0 40px rgba(255,255,255,0.1); }
+
+        /* MOTOR CENTRAL */
+        .workshop-core { background: var(--panel); border: 1px solid #222; border-radius: 20px; padding: 30px; display: flex; gap: 30px; align-items: center; box-shadow: 0 20px 50px rgba(0,0,0,0.7); margin: 20px 0; }
+        .engine-gear { font-size: 90px; color: var(--accent); filter: drop-shadow(0 0 10px rgba(0,242,255,0.2)); transition: 0.5s; }
+
+        /* X-RAY VIEW */
+        .xray-box { background: #050608; border: 1px solid #1a1b20; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.65em; height: 120px; overflow: hidden; position: relative; color: #1b5e20; }
+        #code-stream { position: absolute; width: 90%; line-height: 1.5; opacity: 0.7; animation: scrollCode 10s linear infinite; }
+
+        /* PAQUETES 📦 */
+        .dispatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; margin-top: 30px; }
+        .pkg-card { background: #16181d; border: 1px solid #2a2d35; padding: 20px; border-radius: 12px; transition: 0.3s; }
+        .pkg-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        /* ASISTENTE Y SEMÁFORO */
+        .assistant-dock { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; align-items: flex-end; z-index: 999; }
+        .chat-box { background: #000; border: 1px solid #333; border-radius: 12px; padding: 15px; width: 260px; margin-bottom: 10px; display: none; }
+        .traffic-light { display: flex; gap: 8px; background: #1a1c22; padding: 8px 15px; border-radius: 30px; border: 1px solid #333; }
+        .light { width: 12px; height: 12px; border-radius: 50%; opacity: 0.15; transition: 0.5s; }
+        .active-g { opacity: 0.6; background: #00ff41; box-shadow: 0 0 8px #00ff41; }
+        .active-y { opacity: 1; background: #ffcc00; box-shadow: 0 0 10px #ffcc00; }
+        .active-r { opacity: 1; background: #ff4444; box-shadow: 0 0 12px #ff4444; }
+
+        /* MODAL PAGOS */
+        #pay-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#000; border:2px solid var(--gold); padding:30px; border-radius:15px; z-index:11000; text-align:center; }
+
+        .btn-main { background: var(--accent); color: #000; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
+        
+        @keyframes scrollCode { 0% { top: 40px; } 100% { top: -80px; } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- MANIFIESTO B/N -->
+    <div id="manifesto-overlay">
+        <div class="manifesto-card">
+            <div onclick="document.getElementById('manifesto-overlay').style.display='none'" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px; font-weight:bold;">&times;</div>
+            <h2 style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px;">MANIFIESTO TITAN</h2>
+            <p style="line-height:1.6; font-size:1em; text-align:justify;">
+                <b>Hola a todos y bienvenidos.</b><br><br>
+                Este es un proyecto de un desarrollador argentino sobre <b>Regulación Térmica Adiabática</b>. Es la primera solución cuántica para sistemas de silicio clásicos en tan solo un clic.<br><br>
+                ¿Por qué lo libero? Quiero que los ciudadanos vean el potencial de una programación adelantada a su época y cuiden el medio ambiente. Compará TITAN con cualquier tecnología actual: un simple orden de datos preserva tu hardware más que nada en el mundo.
+            </p>
+            <div style="text-align:center; font-weight:bold; margin-top:20px;">[ TITAN CORE: SOBERANÍA TECNOLÓGICA ]</div>
+        </div>
+    </div>
+
+    <h1>TITAN CORE</h1>
+    <p style="color: #444; letter-spacing: 3px; font-size: 0.8em;">SOLUCIÓN DE PROPULSIÓN ARGENTINA</p>
+
+    <div class="workshop-core">
+        <div id="main-gear" class="engine-gear">⚙️</div>
+        <div class="xray-box">
+            <div id="code-stream">
+                > INIT_CORE_ADIABATIC...<br>
+                > CALIBRATING_SILICON...<br>
+                > TEMP: OPTIMAL<br>
+                > DATA_FLOW: READY<br>
+                > STATUS: STANDBY<br>
+                > RE-CHECKING_VALVES...
+            </div>
+        </div>
+    </div>
+
+    <button onclick="ignite()" class="btn-main">SIMULACIÓN DE ARRANQUE</button>
+
+    <div class="dispatch-grid">
+        <!-- UNIVERSAL -->
+        <div class="pkg-card" style="border: 2px solid var(--gold); grid-column: 1 / -1;">
+            <h3 style="color:var(--gold)">📦 PAQUETE UNIVERSAL v3.0</h3>
+            <p style="font-size: 0.8em; color: #888;">Detección automática. Compatible con todos los sistemas. Genera acceso directo con icono de Semáforo.</p>
+            <button onclick="deploy('UNIVERSAL')" style="background:var(--gold); border:none; padding:10px 30px; font-weight:bold; cursor:pointer; border-radius:5px;">DESCARGA MAESTRA</button>
+        </div>
+        <!-- WINDOWS -->
+        <div class="pkg-card">
+            <div class="pkg-title">🪟 WINDOWS (TODAS LAS VERS.)</div>
+            <p style="font-size: 0.75em; color:#666;">Compatible Win 7/8/10/11. Incluye .BAT transparente y .EXE directo.</p>
+            <button onclick="deploy('WIN')" style="width:100%; background:none; border:1px solid #444; color:var(--accent); padding:8px; cursor:pointer;">CARGAR ⛽</button>
+        </div>
+        <!-- ANDROID -->
+        <div class="pkg-card">
+            <div class="pkg-title">🤖 ANDROID / TERMUX</div>
+            <p style="font-size: 0.75em; color:#666;">Optimización móvil ARM64. Control térmico y de batería integrado.</p>
+            <button onclick="deploy('ANDROID')" style="width:100%; background:none; border:1px solid #444; color:var(--accent); padding:8px; cursor:pointer;">CARGAR ⛽</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <button onclick="openPayment()" style="background:#332200; color:var(--gold); border:1px solid var(--gold); padding:10px 20px; border-radius:30px; cursor:pointer; font-weight:bold;">⛽ SUMINISTRAR COMBUSTIBLE (APOYAR)</button>
+    </div>
+
+    <!-- ASISTENTE SEMÁFORO -->
+    <div class="assistant-dock">
+        <div class="chat-box" id="chat">
+            <div id="msg" style="font-size: 0.85em; color:#fff; line-height:1.4;"></div>
+            <input type="text" id="user-in" placeholder="Duda técnica..." style="width:100%; background:#000; border:1px solid #333; color:var(--data); margin-top:10px; font-size:0.8em; outline:none; padding:5px;">
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 30px;">
+            <div class="traffic-light">
+                <div id="l-r" class="light"></div><div id="l-y" class="light"></div><div id="l-g" class="light active-g"></div>
+            </div>
+            <button id="v-btn" onclick="toggleV()" style="background:none; border:none; cursor:pointer; font-size:1.2em;">🔇</button>
+            <div onclick="toggleC()" style="font-size: 40px; cursor: pointer;">⚙️</div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGOS -->
+    <div id="pay-modal">
+        <h3 style="color:var(--gold); margin-top:0;">🏁 SUMINISTRO AL MECÁNICO</h3>
+        <p style="font-size:0.8em; color:#bbb;">Tu aporte mantiene el motor soberano y libre de corporaciones.</p>
+        <button onclick="payLocal()" style="background:#009ee3; color:#fff; border:none; width:100%; padding:12px; border-radius:5px; margin-bottom:10px; cursor:pointer; font-weight:bold;">💙 MERCADO PAGO (ARGENTINA)</button>
+        <button onclick="payGlobal()" style="background:#003087; color:#fff; border:none; width:100%; padding:12px; border-radius:5px; cursor:pointer; font-weight:bold;">🌎 PAYPAL (INTERNATIONAL)</button>
+        <br><br><button onclick="document.getElementById('pay-modal').style.display='none'" style="background:none; border:none; color:#666; cursor:pointer;">[ CERRAR ]</button>
+    </div>
+
+    <script>
+        let voice = false;
+        function toggleV() { voice = !voice; document.getElementById('v-btn').innerText = voice ? "🔊" : "🔇"; }
+        function toggleC() { const c = document.getElementById('chat'); c.style.display = c.style.display==='block'?'none':'block'; }
+
+        function speak(t) {
+            let i = 0; const m = document.getElementById('msg'); m.innerText = "";
+            const interval = setInterval(() => {
+                if(i < t.length) { m.innerHTML += t.charAt(i); i++; }
+                else { clearInterval(interval); }
+            }, 35);
+            if(voice) { const u = new SpeechSynthesisUtterance(t); u.lang = 'es-AR'; u.rate = 1; window.speechSynthesis.speak(u); }
+        }
+
+        function setLight(c) {
+            document.getElementById('l-r').className = 'light' + (c=='red'?' active-r':'');
+            document.getElementById('l-y').className = 'light' + (c=='yellow'?' active-y':'');
+            document.getElementById('l-g').className = 'light' + (c=='green'?' active-g':'');
+        }
+
+        function ignite() {
+            setLight('yellow'); speak("Iniciando emulación. Calibrando inyectores cuánticos...");
+            let p = 0; const gear = document.getElementById('main-gear');
+            const loop = setInterval(() => {
+                p += 5; gear.style.transform = `rotate(${p*10}deg)`;
+                if(p >= 100) { clearInterval(loop); setLight('green'); speak("¡Motor en marcha! Llaves en mano conductor. Sincronización óptima."); }
+            }, 50);
+        }
+
+        function deploy(os) {
+            speak("Despachando paquete " + os + ". Al terminar, buscá el icono del SEMÁFORO en tu pantalla.");
+            const blob = new Blob(["Titan Core Protocol"], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Titan_${os}_Deploy.txt`;
+            a.click();
+        }
+
+        function openPayment() {
+            setLight('green');
+            speak("¡Esa es la actitud! Tu apoyo evita que caigamos en manos de corporaciones. ¡Gracias por la nafta!");
+            document.getElementById('pay-modal').style.display = 'block';
+        }
+
+        function payLocal() {
+            const alias = "calor.abeja.apuro.mp";
+            navigator.clipboard.writeText(alias);
+            speak("Alias '" + alias + "' copiado. Abrí tu App de Mercado Pago. ¡Tanque lleno!");
+            setTimeout(() => { window.open("https://mpago.la", "_blank"); }, 1500);
+        }
+
+        function payGlobal() {
+            window.open("https://www.paypal.com", "_blank");
+        }
+
+        window.onload = () => { setTimeout(() => { toggleC(); speak("¡Bienvenido a TITAN CORE! ¿Aprendemos a manejar?"); }, 1500); };
+    </script>
+</body>
+</html>
+
