@@ -17,30 +17,10 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        /* OVERLAY MANIFIESTO PAPIRO (CENTRADO PARA ANDROID) */
-        #overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.95); z-index: 10000; 
-            display: flex; align-items: center; justify-content: center; /* CENTRADO TOTAL */
-            padding: 20px; box-sizing: border-box;
-        }
-        .paper { 
-            background-color: #e4d5b7; 
-            background-image: url("https://www.transparenttextures.com"); 
-            color: #8b0000; padding: 40px 25px 25px 25px; /* MÁS ESPACIO ARRIBA PARA LA X */
-            max-width: 480px; width: 100%; border-radius: 2px; 
-            position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); 
-            font-family: 'Times New Roman', Times, serif; line-height: 1.4; border: 1px solid #c2b280;
-            max-height: 90vh; overflow-y: auto; /* POR SI EL TEXTO ES LARGO */
-        }
-        /* BOTÓN X REFORZADO */
-        .close-btn { 
-            position: absolute; top: 10px; right: 15px; 
-            font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; 
-            opacity: 0.8; font-family: sans-serif;
-        }
-        .close-btn:hover { opacity: 1; }
-
+        /* MANIFIESTO PAPIRO ORIGINAL */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .paper { background-color: #e4d5b7; background-image: url("https://www.transparenttextures.com"); color: #8b0000; padding: 40px 25px 25px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', Times, serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; opacity: 0.8; font-family: sans-serif; }
         .paper h2 { text-align: center; border-bottom: 1px dashed #8b0000; padding-bottom: 10px; margin-top: 0; letter-spacing: 2px; font-size: 1.4rem; }
         .paper p { text-align: left; font-size: 1rem; margin-bottom: 12px; font-weight: 600; }
         .highlight { border-bottom: 1px solid #8b0000; }
@@ -57,7 +37,7 @@
         #temp-fill { width: 10%; height: 100%; background: var(--danger); transition: 1.5s ease-in-out; }
 
         /* INTERFAZ IA CORE */
-        .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; }
+        .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
         .mode-btn-eco { background: rgba(0,0,0,0.6); border: 1px solid #333; color: var(--bio-neutral); padding: 10px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; font-family: 'Consolas', monospace; }
         .mode-btn-eco.active { border-color: var(--bio-neutral); background: rgba(77, 179, 77, 0.15); }
         .mode-btn-tech { background: rgba(0,0,0,0.6); border: 1px solid #333; color: var(--silver-bright); padding: 10px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; font-family: 'Consolas', monospace; }
@@ -66,6 +46,9 @@
         .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 110px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); }
         #chat-window { color: var(--accent); font-size: 0.85rem; line-height: 1.4; white-space: pre-wrap; }
         #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 12px; outline: none; font-family: monospace; box-sizing: border-box; }
+
+        /* BOTÓN DE VOZ */
+        #voice-toggle { position: absolute; right: 10px; top: 45px; z-index: 100; background: transparent; border: none; color: var(--accent); font-size: 1.2rem; cursor: pointer; opacity: 0.6; }
 
         .donation-box { text-align: center; margin: 30px 0; max-width: 450px; }
         .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 12px 20px; font-weight: bold; background: rgba(255, 204, 0, 0.05); display: inline-block; transition: 0.3s; }
@@ -107,16 +90,14 @@
     
     <div class="ai-interface">
         <button id="btn-eco" class="mode-btn-eco" onclick="setMode('eco')">[ Sintonía Ecológica ]</button>
-        <div class="chat-core"><div id="chat-window">> IAcore ONLINE.<br>> Defina su propósito de sintonía...</div></div>
+        <button id="voice-toggle" onclick="toggleVoice()">🔊</button>
+        <div class="chat-core"><div id="chat-window">> IAcore ONLINE.<br>> Sintonizador, establezca comunicación...</div></div>
         <button id="btn-tech" class="mode-btn-tech" onclick="setMode('tech')">[ Protocolo Técnico ]</button>
-        <input type="text" id="ai-in" placeholder="Comando al Núcleo..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
+        <input type="text" id="ai-in" placeholder="Comando..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
     </div>
 
     <div class="donation-box">
-        <p style="font-size:0.85rem; margin-bottom:15px; line-height:1.4;">
-            Dona un poco de nafta para que el motor siga girando en cada casa.......🏡<br>
-            <span style="color:var(--accent); font-size:0.75rem;">(Con tu ayuda ahorras consumo y ayudas a tu propio ecosistema)</span>
-        </p>
+        <p style="font-size:0.85rem; margin-bottom:15px; line-height:1.4;">Dona un poco de nafta para que el motor siga girando en cada casa...🏡</p>
         <div style="display: flex; gap: 15px; justify-content: center;">
             <a href="https://link.mercadopago.com.ar" target="_blank" onclick="handlePayment('Mercado')" class="pay-link">[ MERCADO ]</a>
             <a href="https://paypal.me" target="_blank" onclick="handlePayment('PayPal')" class="pay-link">[ PAYPAL ]</a>
@@ -134,58 +115,54 @@
 
     <script>
         let supplies = 1240; let temp = 10; let currentMode = 'classic';
+        let voiceEnabled = true;
 
-        function closeManifesto() { 
-            document.getElementById('overlay').style.display = 'none'; 
-            if ('speechSynthesis' in window) {
-                const m = new SpeechSynthesisUtterance("Acceso al núcleo concedido.");
-                m.lang = 'es-AR';
-                window.speechSynthesis.speak(m);
-            }
-        }
-        
-        function setMode(mode) {
-            currentMode = (currentMode === mode) ? 'classic' : mode;
-            document.getElementById('btn-eco').classList.toggle('active', currentMode === 'eco');
-            document.getElementById('btn-tech').classList.toggle('active', currentMode === 'tech');
-            const display = document.getElementById('mode-display');
-            display.innerText = currentMode.toUpperCase();
-            display.style.color = currentMode === 'eco' ? 'var(--bio-neutral)' : (currentMode === 'tech' ? 'var(--silver-bright)' : 'var(--accent)');
-            addLog(`Filtro de Sintonía: ${currentMode.toUpperCase()}`);
-        }
-
-        function updateUI() {
-            document.getElementById('supply-count').innerText = supplies.toString().padStart(6, '0');
-            document.getElementById('temp-fill').style.width = temp + "%";
-            document.getElementById('temp-fill').style.background = temp < 30 ? "var(--danger)" : (temp < 70 ? "var(--gold)" : "var(--data)");
-        }
-
-        function igniteEngine() { document.getElementById('gear').classList.add('spinning'); addLog("Ignición activa. Ciclo adiabático iniciado."); }
-        function handlePayment(source) { addLog(`Suministro vía ${source} en proceso.`); supplies++; temp = Math.min(temp + 5, 100); updateUI(); }
+        function toggleVoice() { voiceEnabled = !voiceEnabled; document.getElementById('voice-toggle').innerText = voiceEnabled ? "🔊" : "🔇"; if(!voiceEnabled) window.speechSynthesis.cancel(); }
+        function closeManifesto() { document.getElementById('overlay').style.display = 'none'; speak("Acceso al núcleo concedido."); }
+        function setMode(mode) { currentMode = (currentMode === mode) ? 'classic' : mode; document.getElementById('mode-display').innerText = currentMode.toUpperCase(); addLog(`Sintonía: ${currentMode.toUpperCase()}`); }
+        function updateUI() { document.getElementById('supply-count').innerText = supplies.toString().padStart(6, '0'); document.getElementById('temp-fill').style.width = temp + "%"; }
+        function igniteEngine() { document.getElementById('gear').classList.add('spinning'); addLog("Ignición activa."); }
+        function handlePayment(source) { addLog(`Suministro: ${source}`); supplies++; temp = Math.min(temp + 5, 100); updateUI(); }
         function addLog(txt) { const win = document.getElementById('chat-window'); win.innerHTML += `\n> ${txt}`; win.scrollTop = win.scrollHeight; }
-
-        function packageSim(target) {
-            addLog(`Compilando GENESIS v23.0 para ${target}...`);
-            setTimeout(() => { addLog(`Núcleo empaquetado. Verifique permisos de sintonizador.`); }, 1500);
-        }
 
         function aiProcess(val) {
             if(!val) return;
             document.getElementById('ai-in').value = "";
-            addLog(`Sintonizador: ${val}`);
+            addLog(`Usted: ${val}`);
             let q = val.toLowerCase();
-            let resp = (q.includes("proyecto") || q.includes("obituario") || q.includes("cuantico")) 
-                ? "¿Usted lucha por esta causa común o solo lo guía la curiosidad del proyecto?" 
-                : (currentMode === 'eco' ? "Sintonizando el equilibrio doméstico..." : "Analizando flujo adiabático de silicio...");
-            addLog(`IAcore: ${resp}`);
-            if ('speechSynthesis' in window) {
+            let resp = "";
+
+            // 1. PROTOCOLO DE CORTESÍA (SALUDOS)
+            if(q.includes("hola") || q.includes("buen")) {
+                resp = "IAcore: Saludos, sintonizador. El núcleo está operativo y listo para la fase térmica.";
+            }
+            // 2. DETECCIÓN DE PROYECTOS
+            else if(q.includes("proyecto") || q.includes("obituario") || q.includes("cuantico")) {
+                resp = "¿Usted lucha por esta causa común o solo lo guía la curiosidad del proyecto?";
+            } 
+            // 3. RESPUESTAS POR MODO
+            else if (currentMode === 'eco') {
+                resp = "IAcore [ECO]: Sintonizando equilibrio doméstico. El orden preserva el ecosistema.";
+            } 
+            else if (currentMode === 'tech') {
+                resp = "IAcore [TECH]: Analizando flujo adiabático. Estabilidad de kernel confirmada.";
+            } 
+            else {
+                resp = "IAcore: Procesando comando en sintonía general.";
+            }
+
+            addLog(resp);
+            speak(resp);
+        }
+
+        function speak(t) {
+            if (voiceEnabled && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const m = new SpeechSynthesisUtterance(resp);
+                const m = new SpeechSynthesisUtterance(t);
                 m.lang = 'es-AR';
                 window.speechSynthesis.speak(m);
             }
         }
-
         window.onload = updateUI;
     </script>
 </body>
