@@ -16,10 +16,10 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        /* EFECTO FLASH CIAN */
+        /* EFECTO FLASH AL RECIBIR ENERGÍA */
         #flash-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent); opacity: 0; z-index: 20000; pointer-events: none; transition: opacity 0.1s; }
 
-        /* MANIFIESTO PAPIRO ORIGINAL - PRESERVADO */
+        /* MANIFIESTO PAPIRO */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         .paper { background-color: #e4d5b7; background-image: url("https://www.transparenttextures.com"); color: #8b0000; padding: 40px 25px 25px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', Times, serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; opacity: 0.8; font-family: sans-serif; }
@@ -27,7 +27,7 @@
         .paper p { text-align: left; font-size: 1rem; margin-bottom: 12px; font-weight: 600; }
         .highlight { border-bottom: 1px solid #8b0000; }
 
-        /* TÍTULO Y DASHBOARD */
+        /* DASHBOARD TITAN */
         .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
         #gear { font-size: 70px; margin: 10px; }
         .spinning { animation: gearRotate 1s linear infinite; }
@@ -35,29 +35,30 @@
 
         .dashboard { background: var(--panel); border: 1px solid #333; padding: 20px; width: 90%; max-width: 450px; border-radius: 8px; margin-bottom: 15px; text-align: center; }
         .label-donors { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        #supply-count { font-size: 3rem; font-weight: bold; }
+        #supply-count { font-size: 3rem; font-weight: bold; font-variant-numeric: tabular-nums; }
         
         .temp-bar-bg { width: 100%; height: 12px; background: #000; border-radius: 4px; border: 1px solid #444; margin: 15px 0; overflow: hidden; position: relative; }
         #temp-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.8s ease-in-out; }
         #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 12px; color: #fff; font-weight: bold; top: 0; left: 0; text-shadow: 1px 1px 2px #000; }
 
-        /* IA CORE INTERFACE */
+        /* IA INTERFACE */
         .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
         .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); }
         #chat-window { color: var(--accent); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; font-weight: bold; }
         #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 15px; outline: none; font-family: monospace; box-sizing: border-box; }
-        #voice-toggle { position: absolute; right: 12px; top: 12px; z-index: 100; background: transparent; border: none; color: var(--accent); font-size: 1.4rem; cursor: pointer; }
+        #voice-toggle { position: absolute; right: 12px; top: 12px; background: transparent; border: none; color: var(--accent); font-size: 1.4rem; cursor: pointer; }
 
-        /* PAQUETES Y DONACIÓN */
+        /* PAQUETES DE INSTALACIÓN */
         .core-installer { width: 95%; max-width: 450px; background: #0a0c10; border: 1px solid #333; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
-        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; transition: 0.3s; border: 1px solid transparent; margin-bottom: 8px; }
+        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; border: 1px solid transparent; margin-bottom: 8px; transition: 0.3s; }
         .dl-android { color: var(--data); border-color: rgba(0, 255, 65, 0.3); background: rgba(0, 255, 65, 0.05); }
         .dl-windows { color: var(--gold); border-color: rgba(255, 204, 0, 0.3); background: rgba(255, 204, 0, 0.05); }
         .dl-linux { color: var(--danger); border-color: rgba(255, 51, 51, 0.3); background: rgba(255, 51, 51, 0.05); }
+        .dl-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
+        /* DONACIONES */
         .donation-box { text-align: center; margin: 30px 0; max-width: 450px; width: 90%; }
         .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 12px 20px; font-weight: bold; background: rgba(255, 204, 0, 0.05); display: inline-block; transition: 0.3s; margin: 5px; min-width: 140px; }
-
         .btn-ignite { background: var(--accent); color: #000; border: none; padding: 18px 60px; font-weight: 900; cursor: pointer; margin: 10px 0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
     </style>
 </head>
@@ -70,9 +71,8 @@
             <h2>TITAN CORE</h2>
             <p><span class="highlight">El Cambio de Identidad: De "Consumidor" a "Sintonizador"</span></p>
             <p>Mientras que los poderosos venden "Potencia" (choque fuerte), Titan Core ofrece "Sincronía" (orden perfecto).</p>
-            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase que impacta directamente en un resultado termodinámico sorprendente.</p>
-            <p>Consumo Inteligente: La eficiencia nace del orden, no del esfuerzo.</p>
-            <p>Bienvenido al bienestar de la ecología donde la soberanía de tu hogar es el corazón que debemos cuidar...</p>
+            <p>A través de un sistema ontológico de software ordenado adiabáticamente, logramos estabilizar la resonancia de fase.</p>
+            <p>Bienvenido a la soberanía de tu hogar...</p>
         </div>
     </div>
 
@@ -93,7 +93,7 @@
     <div class="ai-interface">
         <button id="voice-toggle" onclick="toggleAudio()">🔊</button>
         <div class="chat-core">
-            <div id="chat-window">> IAcore ONLINE.<br>> vamos a encender el motor y a probar toda la potencia de este modelo titan!!!</div>
+            <div id="chat-window">> IAcore ONLINE.</div>
         </div>
         <input type="text" id="ai-in" placeholder="Comando..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
     </div>
@@ -132,18 +132,27 @@
         const db = getDatabase(app);
         const donorRef = ref(db, 'stats/donorCount');
 
+        let firstLoad = true;
+
         onValue(donorRef, (snapshot) => {
             const val = snapshot.val() || 1240;
             document.getElementById('supply-count').innerText = val.toString().padStart(6, '0');
+            if (!firstLoad) {
+                triggerEnergyEffect();
+            }
+            firstLoad = false;
         });
+
+        function triggerEnergyEffect() {
+            const flash = document.getElementById('flash-effect');
+            flash.style.opacity = "0.4";
+            setTimeout(() => flash.style.opacity = "0", 150);
+            aiLog("SISTEMA: Energía recibida. Sincronizando nube...");
+            speakIA("Bienvenido. Con tu donación arrancas el motor y cuidas el ahorro de energía en tu hogar en el propio ecosistema global.");
+        }
 
         window.simulateDonation = function() {
             runTransaction(donorRef, (count) => (count || 1240) + 1);
-            const flash = document.getElementById('flash-effect');
-            flash.style.opacity = "0.3";
-            setTimeout(() => flash.style.opacity = "0", 150);
-            aiLog("SISTEMA: Energía recibida. Sincronizando nube...");
-            speakIA("Energía recibida. El motor Proyecto Cuántico se fortalece.");
         };
     </script>
 
@@ -154,17 +163,15 @@
         function closeManifesto() { document.getElementById('overlay').style.display = 'none'; speakIA(msgPotencia); }
         function toggleAudio() { isAudioMuted = !isAudioMuted; document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊"; if(isAudioMuted) window.speechSynthesis.cancel(); }
         function aiLog(msg) { const win = document.getElementById('chat-window'); win.innerHTML += `<br>> ${msg}`; win.scrollTop = win.scrollHeight; }
-        function aiProcess(val) { if(!val) return; aiLog(`<span style="color:white">USR: ${val}</span>`); document.getElementById('ai-in').value = ''; setTimeout(() => { const res = "Sintonía estable. Analizando parámetros cuánticos."; aiLog(res); speakIA(res); }, 600); }
+        function aiProcess(val) { if(!val) return; aiLog(`<span style="color:white">USR: ${val}</span>`); document.getElementById('ai-in').value = ''; setTimeout(() => { const res = "Sintonía estable. Analizando parámetros."; aiLog(res); speakIA(res); }, 600); }
         
         function speakIA(text) {
-            if (isAudioMuted) return;
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const msg = new SpeechSynthesisUtterance(text);
-                msg.lang = 'es-AR';
-                msg.rate = 1.0;
-                window.speechSynthesis.speak(msg);
-            }
+            if (isAudioMuted || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'es-AR';
+            msg.rate = 1.0;
+            window.speechSynthesis.speak(msg);
         }
 
         function igniteEngine() {
