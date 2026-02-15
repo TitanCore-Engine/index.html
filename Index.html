@@ -1,0 +1,26 @@
+// CONFIGURACIÓN DEL BÚNKER TITAN CORE
+const MOTOR_URL = "https://servidor-motor-2.onrender.com";
+
+async function aiProcess(val) {
+    if(!val) return;
+    aiLog(`<span style="color:white">USR: ${val}</span>`);
+    document.getElementById('ai-in').value = '';
+
+    try {
+        // La página llama al búnker en Render, donde las llaves están escondidas
+        const response = await fetch(`${MOTOR_URL}/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: val })
+        });
+        
+        const data = await response.json();
+        const res = data.res || "Sintonía estable. Analizando parámetros.";
+        aiLog(res);
+        speakIA(res);
+    } catch(e) { 
+        // Si el motor estaba "dormido" (Plan Free), avisamos al usuario
+        aiLog("El motor está despertando... Reintentá en 30 segundos."); 
+    }
+}
+
