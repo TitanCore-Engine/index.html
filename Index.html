@@ -1,26 +1,108 @@
-// CONFIGURACIÓN DEL BÚNKER TITAN CORE
+// =============================================================================
+// 🛡️ CONFIGURACIÓN DE ENLACE AL BÚNKER TITAN CORE
+// =============================================================================
 const MOTOR_URL = "https://servidor-motor-2.onrender.com";
+let isAudioMuted = false;
 
+/**
+ * Procesa comandos y los envía al búnker en Render.
+ * Mantiene la lógica del núcleo oculta al usuario.
+ */
 async function aiProcess(val) {
-    if(!val) return;
+    if (!val) return;
+    
+    // Registro visual del comando del usuario
     aiLog(`<span style="color:white">USR: ${val}</span>`);
     document.getElementById('ai-in').value = '';
 
     try {
-        // La página llama al búnker en Render, donde las llaves están escondidas
+        // Consultamos al servidor central (Render)
         const response = await fetch(`${MOTOR_URL}/chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: val })
         });
         
+        if (!response.ok) throw new Error("Status: " + response.status);
+
         const data = await response.json();
         const res = data.res || "Sintonía estable. Analizando parámetros.";
+        
         aiLog(res);
         speakIA(res);
-    } catch(e) { 
-        // Si el motor estaba "dormido" (Plan Free), avisamos al usuario
-        aiLog("El motor está despertando... Reintentá en 30 segundos."); 
+    } catch (e) { 
+        // Gestión de latencia para planes gratuitos de Render
+        console.error("Error de enlace:", e);
+        aiLog("<span style='color:var(--gold)'>El motor está despertando... Reintentá en 30 segundos.</span>"); 
     }
 }
 
+/**
+ * Protocolo de Ignición Visual (Lógica Adiabática)
+ */
+function igniteEngine() {
+    const gear = document.getElementById('gear');
+    const fill = document.getElementById('temp-fill');
+    const txt = document.getElementById('temp-percent');
+    
+    if (gear.classList.contains('spinning')) return;
+    
+    gear.classList.add('spinning');
+    aiLog("INICIANDO PROTOCOLO DE IGNICIÓN...");
+    speakIA("Iniciando motor Titan. Calibrando resonancia.");
+    
+    let p = 0;
+    let timer = setInterval(() => {
+        // Incremento con entropía simulada
+        p += Math.floor(Math.random() * 3) + 1;
+        if (p > 100) p = 100;
+
+        fill.style.width = p + '%';
+        txt.innerText = 'POTENCIA: ' + p + '%';
+        
+        if (p >= 100) { 
+            clearInterval(timer); 
+            aiLog("NÚCLEO EN RESONANCIA ESTABLE."); 
+            startOscillation(fill, txt);
+        }
+    }, 40);
+}
+
+/**
+ * Mantiene la sensación de motor encendido (Oscilación de fase)
+ */
+function startOscillation(fill, txt) {
+    setInterval(() => {
+        let osc = Math.floor(Math.random() * (98 - 92 + 1)) + 92;
+        fill.style.width = osc + '%';
+        txt.innerText = 'POTENCIA: ' + osc + '% (SINCRO)';
+    }, 1000);
+}
+
+// --- FUNCIONES AUXILIARES DE INTERFAZ ---
+
+function aiLog(msg) { 
+    const win = document.getElementById('chat-window'); 
+    const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    win.innerHTML += `<br><span style="color:#444">[${timestamp}]</span> > ${msg}`; 
+    win.scrollTop = win.scrollHeight; 
+}
+
+function speakIA(text) {
+    if (isAudioMuted) return;
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'es-AR';
+    window.speechSynthesis.speak(msg);
+}
+
+function toggleAudio() { 
+    isAudioMuted = !isAudioMuted; 
+    document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊"; 
+    if (isAudioMuted) window.speechSynthesis.cancel(); 
+}
+
+function closeManifesto() { 
+    document.getElementById('overlay').style.display = 'none'; 
+    aiLog("Sintonizador detectado. El núcleo espera sus órdenes.");
+}
